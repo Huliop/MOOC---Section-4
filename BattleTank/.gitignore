@@ -43,6 +43,7 @@
 *.sdf
 *.VC.db
 *.VC.opendb
+*.umap
 
 # Precompiled Assets
 SourceArt/**/*.png
