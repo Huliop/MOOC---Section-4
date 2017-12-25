@@ -74,3 +74,6 @@ Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+#Stater Pack
+Content/StarterContent/*
