@@ -3,6 +3,7 @@
 #include "TankPlayerController.h"
 #include "Engine/World.h"
 
+// Effectué au lancement du jeu
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -13,6 +14,7 @@ void ATankPlayerController::BeginPlay()
 	}
 }
 
+// Effectué tous les tick
 void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
