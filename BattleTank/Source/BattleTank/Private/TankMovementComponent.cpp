@@ -2,9 +2,15 @@
 
 #include "TankMovementComponent.h"
 
-void UTankMovementComponent::IntendMoveForward(float Throw)
+void UTankMovementComponent::Initialize(UTankTrack * LeftTrackToSet, UTankTrack * RightTrackToSet)
 {
-	UE_LOG(LogTemp, Warning, TEXT("TA MERE : %f"), Throw);
+	if (!LeftTrackToSet || !RightTrackToSet) { return; }
+	LeftTrack = LeftTrackToSet;
+	RightTrack = RightTrackToSet;
 }
 
-
+void UTankMovementComponent::IntendMoveForward(float Throw)
+{
+	LeftTrack->SetThrottle(Throw);
+	RightTrack->SetThrottle(Throw);
+}
