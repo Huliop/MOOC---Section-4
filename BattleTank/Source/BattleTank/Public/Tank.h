@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "TankAimingComponent.h"
+#include "TankMovementComponent.h"
 #include "Tank.generated.h"
 
 //forward declaration
@@ -26,6 +27,9 @@ protected:
 	virtual void BeginPlay() override;
 
 	UTankAimingComponent *TankAimingComponent;
+
+	UPROPERTY(BlueprintReadOnly)
+	UTankMovementComponent *TankMovementComponent;
 
 public:	
 	// Called to bind functionality to input
