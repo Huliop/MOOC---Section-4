@@ -15,12 +15,18 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 	
+protected:
+
+	UFUNCTION(BlueprintCallable)
+	ATank* GetControlledTank() const;
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void FoundAimingComponent(UTankAimingComponent *AimingComponent);
+
 private:
 
 	void BeginPlay() override;
 	void Tick(float DeltaTime) override;
-
-	ATank* GetControlledTank() const;
 
 	void AimTowardsCrosshair();
 

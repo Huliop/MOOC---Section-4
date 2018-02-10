@@ -3,14 +3,16 @@
 #include "TankPlayerController.h"
 #include "Engine/World.h"
 
+
 // Effectué au lancement du jeu
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-
-	auto ControlledTank = GetControlledTank();
-	if (!ControlledTank) {
-		UE_LOG(LogTemp, Error, TEXT("On ne possède pas de tank"))
+	
+	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	if (AimingComponent)
+	{
+		FoundAimingComponent(AimingComponent);
 	}
 }
 
