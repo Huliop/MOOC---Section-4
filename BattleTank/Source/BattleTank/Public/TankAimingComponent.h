@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "Projectile.h"
 #include "TankAimingComponent.generated.h"
 
 UENUM()
@@ -23,10 +24,13 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 
 public:	
 
-	void AimAt(FVector HitLocation, float FiringVelocity);
+	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable)
 	void Initialize(UTankTurret *TurretToSet, UTankBarrel *BarrelToSet);
+
+	UFUNCTION(BlueprintCallable)
+	void Fire();
 
 protected:
 
@@ -36,6 +40,17 @@ protected:
 private:
 	UTankBarrel *Barrel;
 	UTankTurret *Turret;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float FiringVelocity = 6000;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float ReloadTime = 2;
+
+	UPROPERTY(EditAnywhere, Category = "Setup")
+	UClass *Projectile_BP;
+
+	float LastFireTime = 0;
 
 	void MoveBarrel(FVector AimDirection);
 	void MoveTurret(FVector AimDireciton);

@@ -6,9 +6,9 @@
 
 
 // Renvoie les coordonnées de l'endroit où on vise
-void UTankAimingComponent::AimAt(FVector HitLocation, float FiringVelocity)
+void UTankAimingComponent::AimAt(FVector HitLocation)
 {
-	if (!Barrel) { return; }
+	if (!ensure(Barrel)) { return; }
 
 	FVector LaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
@@ -53,4 +53,20 @@ void UTankAimingComponent::MoveTurret(FVector AimDirection)
 	FRotator TurretRotator = Turret->GetForwardVector().Rotation();
 	FRotator DeltaRotator = AimAsRotator - TurretRotator;
 	Turret->Rotate(DeltaRotator.Yaw);
+}
+
+void UTankAimingComponent::Fire()
+{
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTime;
+
+	if (Barrel && isReloaded)
+	{
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+			Projectile_BP,
+			Barrel->GetSocketLocation(FName("Projectile")),
+			Barrel->GetSocketRotation(FName("Projectile"))
+			);
+		Projectile->LaunchProjectile(FiringVelocity);
+		LastFireTime = FPlatformTime::Seconds();
+	}
 }

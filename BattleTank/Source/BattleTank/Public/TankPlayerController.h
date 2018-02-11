@@ -3,7 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Tank.h"
+#include "TankAimingComponent.h"
+#include "TankMovementComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
 
@@ -16,9 +17,6 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 	
 protected:
-
-	UFUNCTION(BlueprintCallable)
-	ATank* GetControlledTank() const;
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void FoundAimingComponent(UTankAimingComponent *AimingComponent);
