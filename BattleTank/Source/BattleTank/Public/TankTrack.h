@@ -20,5 +20,21 @@ public:
 	void SetThrottle(float Throttle);
 	
 	UPROPERTY(EditDefaultsOnly)
-	float TrackMaxDrivingForce = 25000000;
+	float TrackMaxDrivingForce = 40000000;
+
+	void BeginPlay() override;
+
+private:
+
+	UTankTrack();
+
+	float CurrentThrottle = 0;
+
+	void ApplySidewaysForce();
+
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent *HitComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, FVector NormalImpulse, const FHitResult &Hit);
+
+	void DriveTrack();
+
 };

@@ -24,6 +24,7 @@ void ATankPlayerController::Tick(float DeltaTime)
 // Début le mouvement de la tour et du canon du tank vers le réticule (crosshair) de visée
 void ATankPlayerController::AimTowardsCrosshair()
 {
+	if (!GetPawn()) { return; }
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }
 	FVector HitLocation;

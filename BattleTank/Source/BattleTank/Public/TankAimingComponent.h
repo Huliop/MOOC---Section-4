@@ -38,6 +38,9 @@ protected:
 	EFireStatus FireStatus = EFireStatus::Reloading;
 
 private:
+
+	UTankAimingComponent();
+
 	UTankBarrel *Barrel;
 	UTankTurret *Turret;
 
@@ -51,6 +54,14 @@ private:
 	UClass *Projectile_BP;
 
 	float LastFireTime = 0;
+
+	FVector AimDirection;
+
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+
+	void BeginPlay() override;
+
+	bool IsBarrelMoving();
 
 	void MoveBarrel(FVector AimDirection);
 	void MoveTurret(FVector AimDireciton);
