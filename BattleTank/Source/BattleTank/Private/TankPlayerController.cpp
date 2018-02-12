@@ -43,10 +43,10 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &HitLocation) const
 
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
-		GetLookVectorHitLocation(LookDirection, HitLocation);
+		return GetLookVectorHitLocation(LookDirection, HitLocation);
 	}
 	
-	return true;
+	return false;
 }
 
 // Renvoie le pixel correspondant au réticule

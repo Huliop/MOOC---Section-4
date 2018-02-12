@@ -10,6 +10,16 @@ UTankAimingComponent::UTankAimingComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
+EFireStatus UTankAimingComponent::GetFireStatus() const
+{
+	return FireStatus;
+}
+
+int UTankAimingComponent::GetAmmoLeft() const
+{
+	return AmmoLeft;
+}
+
 // Renvoie les coordonnées de l'endroit où on vise
 void UTankAimingComponent::AimAt(FVector HitLocation)
 {
@@ -46,7 +56,11 @@ void UTankAimingComponent::Initialize(UTankTurret * TurretToSet, UTankBarrel * B
 
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
 {
-	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTime)
+	if (AmmoLeft <= 0)
+	{
+		FireStatus = EFireStatus::OutOfAmmo;
+	}
+	else if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTime)
 	{
 		FireStatus = EFireStatus::Reloading;
 	}
@@ -88,7 +102,16 @@ void UTankAimingComponent::MoveTurret(FVector AimDirection)
 	FRotator AimAsRotator = AimDirection.Rotation();
 	FRotator TurretRotator = Turret->GetForwardVector().Rotation();
 	FRotator DeltaRotator = AimAsRotator - TurretRotator;
-	Turret->Rotate(DeltaRotator.Yaw);
+
+	if (FMath::Abs(DeltaRotator.Yaw) < 180)
+	{ 
+		Turret->Rotate(DeltaRotator.Yaw);
+	}
+	else
+	{
+		Turret->Rotate(-DeltaRotator.Yaw);
+	}
+	
 }
 
 void UTankAimingComponent::Fire()
@@ -97,13 +120,17 @@ void UTankAimingComponent::Fire()
 	{
 		if (Barrel)
 		{
-			auto Projectile = GetWorld()->SpawnActor<AProjectile>(
-				Projectile_BP,
-				Barrel->GetSocketLocation(FName("Projectile")),
-				Barrel->GetSocketRotation(FName("Projectile"))
-				);
-			Projectile->LaunchProjectile(FiringVelocity);
-			LastFireTime = FPlatformTime::Seconds();
+			if (AmmoLeft > 0)
+			{
+				auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+					Projectile_BP,
+					Barrel->GetSocketLocation(FName("Projectile")),
+					Barrel->GetSocketRotation(FName("Projectile"))
+					);
+				Projectile->LaunchProjectile(FiringVelocity);
+				LastFireTime = FPlatformTime::Seconds();
+				AmmoLeft--;
+			}
 		}
 	}
 }

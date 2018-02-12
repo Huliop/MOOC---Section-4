@@ -14,7 +14,8 @@ enum class EFireStatus : uint8
 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	OutOfAmmo
 };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -31,6 +32,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void Fire();
+
+	EFireStatus GetFireStatus() const;
+
+	UFUNCTION(BlueprintCallable)
+	int GetAmmoLeft() const;
 
 protected:
 
@@ -56,6 +62,8 @@ private:
 	float LastFireTime = 0;
 
 	FVector AimDirection;
+
+	int AmmoLeft = 10;
 
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 

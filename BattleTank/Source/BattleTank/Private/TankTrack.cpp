@@ -30,8 +30,9 @@ void UTankTrack::ApplySidewaysForce()
 	// Calculate and apply sideways
 	auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
 	auto CorrectionForce = (TankRoot->GetMass() * CorrectionAcceleration) / 2;
-
+	
 	TankRoot->AddForce(CorrectionForce);
+	
 }
 
 void UTankTrack::OnHit(UPrimitiveComponent *HitComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, FVector NormalImpulse, const FHitResult &Hit)
