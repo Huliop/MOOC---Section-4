@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "Projectile.generated.h"
 
 
@@ -17,8 +18,6 @@ public:
 	// Sets default values for this actor's properties
 	AProjectile();
 
-	UProjectileMovementComponent *ProjectileMovement;
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -28,5 +27,21 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void LaunchProjectile(float Speed);
+
+private:
+
+	UProjectileMovementComponent *ProjectileMovement;
+
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent *CollisionMesh;
+
+	UPROPERTY(VisibleAnywhere)
+	UParticleSystemComponent *LaunchBlast;
+
+	UPROPERTY(VisibleAnywhere)
+	UParticleSystemComponent *ImpactBlast;
+
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent *HitComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, FVector NormalImpulse, const FHitResult &Hit);
 	
 };

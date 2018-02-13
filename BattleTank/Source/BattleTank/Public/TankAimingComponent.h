@@ -36,7 +36,7 @@ public:
 	EFireStatus GetFireStatus() const;
 
 	UFUNCTION(BlueprintCallable)
-	int GetAmmoLeft() const;
+	int32 GetAmmoLeft() const;
 
 protected:
 
@@ -63,7 +63,7 @@ private:
 
 	FVector AimDirection;
 
-	int AmmoLeft = 10;
+	int32 AmmoLeft = 10;
 
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 
